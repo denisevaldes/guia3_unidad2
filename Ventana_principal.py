@@ -47,10 +47,52 @@ class Ventana_principal(Gtk.Window):
         self.text_view = Gtk.TextView() # Se crea text view.
         self.textbuffer = self.text_view.get_buffer() # Buffer se refiere al espacio en memoria utilizado
         self.page1.add(self.text_view) # Se añade a text view a scrol.
-        self.notebook.append_page(self.page1,Gtk.Label(label="3"))
+        
+
+        header = Gtk.HBox()
+        self.label = Gtk.Label(label = "quete")
+        image = Gtk.Image()
+        image.set_from_icon_name("window-close", Gtk.IconSize.BUTTON)
+        close_button = Gtk.Button()
+        close_button.add(image)
+        close_button.set_relief(Gtk.ReliefStyle.NONE)
+        close_button.connect("clicked", self.on_tab_close)
+        header.pack_start(self.label,expand = True, fill = True, padding = 0)
+        header.pack_end(close_button, expand = False, fill = False, padding = 0)
+        header.show_all()
+
+        self.notebook.append_page(self.page1,header)
+
+    def on_tab_close(self, btn = None):
+        self.notebook.remove_page(self.notebook.get_current_page())
+
 
     def open(self, btn = None):
-        Abrir_archivo()
+        archivo = Abrir_archivo()
+        nombre, buffer_nuevo_archivo = archivo.tipo_respuesta()
+
+        self.pagina = Gtk.ScrolledWindow()
+        self.text_view1 = Gtk.TextView() # Se crea text view.
+        self.textbuffer1 = self.text_view1.get_buffer() # Buffer se refiere al espacio en memoria utilizado
+        self.textbuffer1.set_text(buffer_nuevo_archivo)
+        self.pagina.add(self.text_view1) # Se añade a text view a scrol.
+
+        header1 = Gtk.HBox()
+        self.label1 = Gtk.Label(label = nombre)
+        image = Gtk.Image()
+        image.set_from_icon_name("window-close", Gtk.IconSize.BUTTON)
+        close_button1 = Gtk.Button()
+        close_button1.add(image)
+        close_button1.set_relief(Gtk.ReliefStyle.NONE)
+        close_button1.connect("clicked", self.on_tab_close)
+        header1.pack_start(self.label1,expand = True, fill = True, padding = 0)
+        header1.pack_end(close_button1, expand = False, fill = False, padding = 0)
+
+        self.notebook.insert_page(self.pagina,header1,1)
+        self.show_all()
+        header1.show_all()
+        # insert_page(child, tab_label, position)
+        print(nombre)
 
 
 if __name__ == "__main__":
@@ -59,3 +101,9 @@ if __name__ == "__main__":
     ventana1.show_all()
     ventana1.connect("destroy", Gtk.main_quit)
     Gtk.main()
+
+    """
+    Cuando se cierran las ventanas, notebook se hace pequeño 
+    luego cuando se abre una nueva pestaña notebook se encuentra en minimo
+    no vuelve a su tamaño original 
+    """

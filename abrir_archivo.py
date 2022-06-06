@@ -22,23 +22,26 @@ class Abrir_archivo(Gtk.FileChooserDialog):
 
         self.filtros(self)
 
-        response = self.run()
+        self.response = self.run()
 
-        if response == Gtk.ResponseType.OK:
+    def tipo_respuesta(self, btn= None):
+
+        if self.response == Gtk.ResponseType.OK:
             #se obtiene el nombre del archivo deseado
             nuevo_archivo = self.get_filename()
+            lista_path = nuevo_archivo.split("/")
+            nombre = lista_path.pop()
             # se abre el archivo deseado y se le entrega el texto 
             # de dicho archivo a la ventana de text_view
             with open(nuevo_archivo, "r") as file:
                 lineas = file.readlines()
-                total = ""
-                for x in lineas: 
-                    total += x
-            self.textbuffer.set_text(total)
-        elif response == Gtk.ResponseType.CANCEL:
+                total_lineas = ""
+                for linea in lineas: 
+                    total_lineas += linea
+            self.destroy()        
+            return nombre, total_lineas
+        elif self.response == Gtk.ResponseType.CANCEL:
             self.destroy()
-
-        self.destroy()
 
     def filtros(self, dialog):
         #se restringen los archivos mostrados en la ventana de dialogo
