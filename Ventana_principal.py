@@ -126,7 +126,8 @@ class Ventana_principal(Gtk.Window):
         cuando no se abre un archivo y solo se cierra la pestaña
         aparece un error diciendo "cannot unpack non-iterable NoneType object
         se da por que al no abrir un archivo, no se puede retornar el nomre 
-        y el buffer del archivo. 
+        y el buffer del archivo, se puso un try except pero en except solo se 
+        puso un pass por que no se que wea poner ahí 
         """
         try:
             archivo = Abrir_archivo()
