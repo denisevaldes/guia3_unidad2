@@ -1,11 +1,11 @@
-import time
 import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 from abrir_archivo import Abrir_archivo
 from guardar_archivo import Guardar_archivo
-
+from Crear_preguntas import Ventana_crear_preguntas
+from ventana_about import Abrir_ventana_about
 
 class Ventana_principal(Gtk.Window):
     def __init__(self):
@@ -29,18 +29,31 @@ class Ventana_principal(Gtk.Window):
         image_button_open = Gtk.Image()
         button_open = Gtk.Button()
         image_button_open.set_from_icon_name("document-open", 
-                                            Gtk.IconSize.BUTTON) # Se define el icono.
+                                             Gtk.IconSize.BUTTON) # Se define el icono.
         button_open.add(image_button_open) # Se añade el icono al boton abrir.
         button_open.connect("clicked", self.open)
         button_open.set_tooltip_text("Abrir archivo")
         header_bar.pack_start(button_open)
 
         """
+        Creacion de boton about
+        """
+        image_button_about = Gtk.Image()
+        button_about = Gtk.Button()
+        image_button_about.set_from_icon_name("help-about",
+                                              Gtk.IconSize.BUTTON)
+        button_about.add(image_button_about)
+        button_about.connect("clicked", self.about_window)
+        button_about.set_tooltip_text("información sobre programa")
+        header_bar.pack_end(button_about)
+
+        """
         Se crea boton guardar.
         """
         image_button_save = Gtk.Image()
         button_save = Gtk.Button()
-        image_button_save.set_from_icon_name("document-save", Gtk.IconSize.BUTTON)
+        image_button_save.set_from_icon_name("document-save",
+                                             Gtk.IconSize.BUTTON)
         button_save.add(image_button_save)
         button_save.connect("clicked", self.save)
         button_save.set_tooltip_text("Guardar archivo")
@@ -49,7 +62,8 @@ class Ventana_principal(Gtk.Window):
 
         image_button_create_file = Gtk.Image()
         button_create_file = Gtk.Button()
-        image_button_create_file.set_from_icon_name("document-save", Gtk.IconSize.BUTTON)
+        image_button_create_file.set_from_icon_name("document-save", 
+                                                    Gtk.IconSize.BUTTON)
         button_create_file.add(image_button_create_file)
         button_create_file.connect("clicked", self.create_file)
         button_create_file.set_tooltip_text("Guardar archivo")
@@ -87,6 +101,10 @@ class Ventana_principal(Gtk.Window):
         Se crea la primera pág mostrada en el notebook.
         """
         self.create_tab_notebook("", "sin titulo")
+
+    def about_window(self, btn=None):
+        about = Abrir_ventana_about()
+
     def answer_questions(self, btn= None):
         print("aqui deberia abrir la pestaña culia de las preugntas")
 
@@ -94,7 +112,7 @@ class Ventana_principal(Gtk.Window):
         print("vista general de preguntas culias")
 
     def create_question(self, btn = None):
-        print("pregunta culia")
+        crear_preguntas = Ventana_crear_preguntas()
 
     def create_file(self, btn = None):
         self.create_tab_notebook("","sin titulo")
@@ -104,10 +122,18 @@ class Ventana_principal(Gtk.Window):
 
 
     def open(self, btn = None):
-        archivo = Abrir_archivo()
-        nombre, buffer_archivo = archivo.tipo_respuesta()
-        self.create_tab_notebook(buffer_archivo,nombre)
-        print(self.nombre)
+        """
+        cuando no se abre un archivo y solo se cierra la pestaña
+        aparece un error diciendo "cannot unpack non-iterable NoneType object
+        se da por que al no abrir un archivo, no se puede retornar el nomre 
+        y el buffer del archivo. 
+        """
+        try:
+            archivo = Abrir_archivo()
+            nombre, buffer_archivo = archivo.tipo_respuesta()
+            self.create_tab_notebook(buffer_archivo,nombre)
+        except:
+            pass
     
     def save(self, btn = None):
         self.texto = self.textbuffer.props.text
@@ -131,8 +157,10 @@ class Ventana_principal(Gtk.Window):
         close_button1.add(image)
         close_button1.set_relief(Gtk.ReliefStyle.NONE) # se quitan los bordes de boton
         close_button1.connect("clicked", self.on_tab_close)
-        header1.pack_start(self.label1,expand = True, fill = True, padding = 0)
-        header1.pack_end(close_button1, expand = False, fill = False, padding = 0)
+        header1.pack_start(self.label1,expand = True,
+                           fill = True, padding = 0)
+        header1.pack_end(close_button1, expand = False,
+                         fill = False, padding = 0)
 
         self.notebook.insert_page(self.pagina,header1,0)
         self.show_all()
