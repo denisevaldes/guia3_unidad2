@@ -20,7 +20,7 @@ class Ventana_principal(Gtk.Window):
 
         header_bar = Gtk.HeaderBar() # Se crea Header Bar.
         header_bar.set_show_close_button(True) # Se muestra boton de cerrar.
-        header_bar.props.title = "HeaderBar example"
+        header_bar.props.title = "Guia 3"
         self.set_titlebar(header_bar) #se añade Header Bar a la ventana.
 
         """
@@ -62,11 +62,11 @@ class Ventana_principal(Gtk.Window):
 
         image_button_create_file = Gtk.Image()
         button_create_file = Gtk.Button()
-        image_button_create_file.set_from_icon_name("document-save", 
+        image_button_create_file.set_from_icon_name("document-new", 
                                                     Gtk.IconSize.BUTTON)
         button_create_file.add(image_button_create_file)
         button_create_file.connect("clicked", self.create_file)
-        button_create_file.set_tooltip_text("Guardar archivo")
+        button_create_file.set_tooltip_text("Crear nuevo archivo")
         header_bar.pack_start(button_create_file)
 
 
