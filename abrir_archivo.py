@@ -7,7 +7,7 @@ from gi.repository import Gtk
 class Abrir_archivo(Gtk.FileChooserDialog):
     def __init__(self):
 
-        super().__init__()
+        super().__init__(action = Gtk.FileChooserAction.OPEN)
         
         self.set_title("abrir archivo")
         self.set_border_width(10)
