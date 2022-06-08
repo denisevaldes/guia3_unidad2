@@ -1,6 +1,6 @@
 # guia3_unidad2
 
-Se crea una aplicación enfocada en ayudar a los estudiantes en su estudio. La aplicación esta basada en el metodo de estudio active-recall, por lo que a primera vista se tiene una pestaña en la cual se encuentra un editor de texto y en donde se pueden abrir archivos existentes, archivos nuevos y guardar los archivos, además de eso se encuentran 3 botones, los cuales tienen como finalidad crear preguntas, revisar las preguntas y test.
+Se crea una aplicación enfocada en ayudar a los estudiantes en su estudio. La aplicación esta basada en el metodo de estudio active-recall, por lo que a primera vista se tiene una pestaña en la cual se encuentra un editor de texto y en donde se pueden abrir archivos existentes, archivos nuevos y guardar los archivos, además de eso se encuentran 3 botones, los cuales tienen como finalidad crear preguntas, revisar las preguntas y testear los conocimientos del estudiante.
 
 # Autores 
 
