@@ -6,6 +6,7 @@ from abrir_archivo import Abrir_archivo
 from guardar_archivo import Guardar_archivo
 from Crear_preguntas import Ventana_crear_preguntas
 from ventana_about import Abrir_ventana_about
+from revisar_preguntas import Ventana_revisar
 
 class Ventana_principal(Gtk.Window):
     def __init__(self):
@@ -109,7 +110,7 @@ class Ventana_principal(Gtk.Window):
         print("aqui deberia abrir la pestaña culia de las preugntas")
 
     def view_questions(self, btn= None):
-        print("vista general de preguntas culias")
+        view_ques = Ventana_revisar()
 
     def create_question(self, btn = None):
         crear_preguntas = Ventana_crear_preguntas()

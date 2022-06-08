@@ -48,7 +48,7 @@ class Abrir_archivo(Gtk.FileChooserDialog):
         # filechooser a textos planos
         filter_text = Gtk.FileFilter()
         filter_text.set_name("Text files")
-        filter_text.add_mime_type("text/plain")
+        #filter_text.add_mime_type("text/plain")
+        filter_text.add_pattern("*.txt")
         dialog.add_filter(filter_text)
-        pass
 
