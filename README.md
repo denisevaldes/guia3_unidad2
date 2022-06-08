@@ -47,7 +47,14 @@ Se crea una aplicación enfocada en ayudar a los estudiantes en su estudio. La a
  
  # responder preguntas
  
- clase que hereda de Gtk.Window y en la cual se muestran las preguntas y respuestas de algún archivo elegido.
+ Clase que hereda de Gtk.Window y en la cual se muestran las preguntas y respuestas de algún archivo elegido.
+ En esta clase se tiene un head bar, una grilla y una box como contenedores.
+ En esta ventana se muestran dos textview y debajo de ellos se muestran 3 botones (1. atras, 2. mostrar respuesta y 3.siguiente), al abrir un archivo csv se muestra el primer string de una lista, la cual correspondería a una pregunta, luego al apretar el boton mostrar respuesta se mostraría la posicion de la lista correspondiente a la respuesta de esa pregunta. A cada extremo se encuentran otros botones los cuales sirven para retroceder o avanzar en las listas.
+ 
+ # ventana about
+ 
+ clase que hereda de Gtk.AboutDialog y en la cual se muestran los autores, el nombre del programa y la version.
+ 
  
  
  
