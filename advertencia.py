@@ -12,6 +12,10 @@ class Ventana_advertencia(Gtk.Dialog):
         Gtk.ResponseType.OK,
         )
 
+        """
+        Se crea un titulo y un label, label sera llenado con un str 
+        dado cada vez que se llame la clase
+        """
         self.set_title("mensaje usuario")
         self.label = Gtk.Label(label = contenido)
         self.vbox.pack_start(self.label,True,True,0)

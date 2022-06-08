@@ -22,16 +22,21 @@ class Guardar_archivo(Gtk.FileChooserDialog):
 
         self.response = self.run()
 
-
-
         if self.response == Gtk.ResponseType.OK:
-            # se obtiene path de la carpeta en donde se quiere guardar archivo
-            # se obtiene el nombre deseado para el archivo, el cual es entregado a una variable
+
+            """
+            Se obtiene path de la carpeta en donde se
+            quiere guardar archivo.
+            Se obtiene el nombre del archivo,
+            el cual es entregado a una variable
+            """
             path  = self.get_current_folder()
-            nombre_archivo_texto = self.get_current_name()
-            nombre_archivo = f"{path}/{nombre_archivo_texto}.txt"
-            # se crea el archivo y se le entrega el texto que tenía dentro
-            with open(nombre_archivo, "w") as file:
+            name_file_text = self.get_current_name()
+            name_file = f"{path}/{name_file_text}.txt"
+            """
+            Se crea el archivo y se le entrega el texto que tenía dentro
+            """
+            with open(name_file, "w") as file:
                 file.write(self.texto)
             self.destroy()
         elif self.response == Gtk.ResponseType.CANCEL:

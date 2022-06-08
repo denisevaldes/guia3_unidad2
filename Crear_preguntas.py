@@ -78,7 +78,7 @@ class Ventana_crear_preguntas(Gtk.Dialog):
         self.respuesta = self.entrada_respuesta.get_text()
 
     def open(self, btn= None):
-        archivo = Abrir_archivo()
+        archivo = Abrir_archivo("*.csv")
         self.nombre, contenido = archivo.tipo_respuesta()
         self.entrada_nombre.set_text(self.nombre)
 

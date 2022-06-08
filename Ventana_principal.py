@@ -7,10 +7,10 @@ from guardar_archivo import Guardar_archivo
 from Crear_preguntas import Ventana_crear_preguntas
 from ventana_about import Abrir_ventana_about
 from revisar_preguntas import Ventana_revisar
+from Responder_preguntas import Responder_pregunta
 
 class Ventana_principal(Gtk.Window):
-    def __init__(self):
-        
+    def __init__(self):    
         super().__init__()
         
         self.set_border_width(10)
@@ -70,36 +70,38 @@ class Ventana_principal(Gtk.Window):
         button_create_file.set_tooltip_text("Crear nuevo archivo")
         header_bar.pack_start(button_create_file)
 
-
         """
-        Creacion de botones/ abajo de notebook 
-        1) boton de crear preguntas de manera rapida 
-        2) vista general preguntas 
-        3) test
+        Creacion de boton crear pregunta
         """
-
         self.button_create_question = Gtk.Button()
         self.button_create_question.set_label("Crear preguntas")
         self.button_create_question.connect("clicked", self.create_question)
         self.grid.attach(self.button_create_question,0,0,1,1)
 
+        """
+        Se crea boton para revisar preguntas
+        """
         self.button_questions_view = Gtk.Button()
         self.button_questions_view.set_label("revisar preguntas")
         self.button_questions_view.connect("clicked", self.view_questions)
         self.grid.attach(self.button_questions_view,1,0,1,1)
 
+        """
+        Se crea boton para active-recall/ practicar preguntas
+        """
         self.button_answer_question = Gtk.Button()
         self.button_answer_question.set_label("test")
         self.button_answer_question.connect("clicked", self.answer_questions)
         self.grid.attach(self.button_answer_question,2,0,1,1)
+
         """
         Creacion de notebook.
         """        
         self.notebook = Gtk.Notebook(vexpand=True, hexpand = True) # Se crea notebook
-        self.grid.attach(self.notebook,0,1,8,8) # Attach(child, left, top, width, height) se añade notebook a grid
+        self.grid.attach(self.notebook,0,1,8,8) # se añade notebook a grid
         
         """
-        Se crea la primera pág mostrada en el notebook.
+        Se crea la primera pag mostrada en el notebook.
         """
         self.create_tab_notebook("", "sin titulo")
 
@@ -107,49 +109,56 @@ class Ventana_principal(Gtk.Window):
         about = Abrir_ventana_about()
 
     def answer_questions(self, btn= None):
-        print("aqui deberia abrir la pestaña culia de las preugntas")
+        dialog_answer = Responder_pregunta()
 
     def view_questions(self, btn= None):
         view_ques = Ventana_revisar()
 
     def create_question(self, btn = None):
-        crear_preguntas = Ventana_crear_preguntas()
+        create_ques = Ventana_crear_preguntas()
 
     def create_file(self, btn = None):
+        """
+        Cuando se crea una pagina nueva en notebook, se llama al 
+        metodo de la clase encargado de crearlas y se le asigna el nombre de
+        "sin titulo"
+        """
         self.create_tab_notebook("","sin titulo")
 
     def on_tab_close(self, btn = None):
+        """
+        Se remmueve pagina de notebook
+        """
         self.notebook.remove_page(self.notebook.get_current_page())
 
 
     def open(self, btn = None):
         """
-        cuando no se abre un archivo y solo se cierra la pestaña
-        aparece un error diciendo "cannot unpack non-iterable NoneType object
-        se da por que al no abrir un archivo, no se puede retornar el nomre 
-        y el buffer del archivo, se puso un try except pero en except solo se 
-        puso un pass por que no se que wea poner ahí 
+        Se abre archivo.
         """
         try:
-            archivo = Abrir_archivo()
+            archivo = Abrir_archivo("*.txt")
             nombre, buffer_archivo = archivo.tipo_respuesta()
             self.create_tab_notebook(buffer_archivo,nombre)
         except:
-            pass
+            print("se cancelo la apertura de archivo")
     
     def save(self, btn = None):
-        self.texto = self.textbuffer.props.text
-        guardar_archivo = Guardar_archivo(self.texto)
+        start_iter = self.textbuffer.get_start_iter()
+        end_iter = self.textbuffer.get_end_iter()
+        self.text  = self.textbuffer.get_text(start_iter, end_iter, True)
+        #self.text = self.textbuffer.props.text
+        save_file = Guardar_archivo(self.text)
 
     def create_tab_notebook(self,buffer, nombre):
         """
         tendría que pasar el buffer y el nombre
         """
-        self.pagina = Gtk.ScrolledWindow()
+        self.scroll = Gtk.ScrolledWindow()
         self.text_view1 = Gtk.TextView() # Se crea text view.
         self.textbuffer = self.text_view1.get_buffer() # Buffer se refiere al espacio en memoria utilizado
         self.textbuffer.set_text(buffer)
-        self.pagina.add(self.text_view1) # Se añade a text view a scrol.
+        self.scroll.add(self.text_view1) # Se añade a text view a scrol.
 
         header1 = Gtk.HBox()
         self.label1 = Gtk.Label(label = nombre)
@@ -164,18 +173,14 @@ class Ventana_principal(Gtk.Window):
         header1.pack_end(close_button1, expand = False,
                          fill = False, padding = 0)
 
-        self.notebook.insert_page(self.pagina,header1,0)
+        self.notebook.insert_page(self.scroll,header1,0)
         self.show_all()
         header1.show_all()
 
 if __name__ == "__main__":
 
-    ventana1 = Ventana_principal()
-    ventana1.show_all()
-    ventana1.connect("destroy", Gtk.main_quit)
+    win = Ventana_principal()
+    win.show_all()
+    win.connect("destroy", Gtk.main_quit)
     Gtk.main()
 
-    """
-    Recuerda cambiar los nombres de las variables y los labels por 
-    cosas representativas 
-    """
