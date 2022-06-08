@@ -30,15 +30,17 @@ Se crea una aplicación enfocada en ayudar a los estudiantes en su estudio. La a
  
  # Ventana advertencia 
  
- clase que hereda de Gtk.Dialog, la cual aparece cuando usuario a cometido un error
- el mensaje que de depende del str entregado dependiendo de la situacion. 
+ Clase que hereda de Gtk.Dialog, la cual aparece cuando usuario a cometido un error.
+
+ El mensaje que de depende de la variable entregada a la clase. 
  
  # Ventana crear preguntas 
  
- Clase que hereda de Gtk.Dialog, la cual tiene una grilla y un headbar como contenedores.
- En el headbar se tienen dos botones:
+ Clase que hereda de Gtk.Dialog, la cual tiene una grilla y un header bar como contenedores.
+ En el header bar se tienen dos botones:
  1. abrir archivo ya existente 
  2. abrir archivo nuevo 
+
  Ademas de eso se tienen labels y entrys, esta ventana sirve para añadir preguntas y respuestas a archivos de clase csv. 
  
  # revisar preguntas 
